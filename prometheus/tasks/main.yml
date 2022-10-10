@@ -26,10 +26,10 @@
   tags:
     - prometheus_configure
 
-   - name: Copy file to target servers
-     copy:
-       src: ~/newtest/prometheus/prometheus.yml
-       dest: /etc/prometheus/
+- name: Copy file to target servers
+  copy:
+    src: ~/newtest/prometheus/prometheus.yml
+    dest: /etc/prometheus/
 
 - name: ensure prometheus service is started and enabled
   become: true
