@@ -1,0 +1,30 @@
+prometheus_dir_configuration: "/etc/prometheus"
+prometheus_retention_time: "365d"
+prometheus_scrape_interval: "30s"
+prometheus_node_exporter: true
+prometheus_node_exporter_group: "all"
+prometheus_env: "production"
+prometheus_var_config:
+  global:
+    scrape_interval: "{{ prometheus_scrape_interval }}"
+    evaluation_interval: 5s
+    external_labels:
+      env: '{{ prometheus_env }}'
+  scrape_configs:
+    - job_name: prometheus
+      scrape_interval: 5m
+      static_configs:
+        - targets: ['{{ inventory_hostname }}:9090']
+
+    - job_name: 'ec2'
+      ec2_sd_configs:
+        - region: 'us-east-1'
+          port: 9100
+          refresh_interval: 1m
+          filters:
+            - name: tag:Name
+              values:
+                - '*linux*'
+      relabel_configs:
+        - source_labels: [_meta_ec2_instance_id]
+          target_label: InstanceID

@@ -1,0 +1,31 @@
+---
+- name: Install Grafana
+  hosts: localhost
+  become: yes
+
+  tasks:
+   - name: Copy repo file to server
+     copy:
+       src: ~/newtest/newplaybooks/grafana.repo
+       dest: /etc/yum.repos.d/
+       mode: 0644
+
+   - name: Update all packages
+     yum:
+      name: yum
+      state: latest
+
+   - name: install grafana
+     yum:
+       name: grafana
+       state: latest
+
+   - name: daemon-reload to pick up config changes
+     ansible.builtin.systemd:
+       daemon_reload: yes
+
+   - name: start grafana
+     ansible.builtin.systemd:
+       name: grafana-server
+       state: started
+          

@@ -1,0 +1,30 @@
+---
+- name: Set up Node exporter
+  hosts: localhost
+  become: yes
+
+  tasks:
+   - name: copy Prometheus DefVar file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/defaults/main.yml
+       dest: /roles/prometheus/defaults/
+
+   - name: copy Prometheus-Main file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/tasks/main.yml
+       dest: /roles/prometheus/tasks/
+
+   - name: copy prometheus.j2 file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/templates/prometheus.yaml.j2
+       dest: /roles/prometheus/templates/
+
+   - name: copy Prometheus CLI file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/templates/prometheus.j2
+       dest: /roles/prometheus/templates/     
+
+   - name: copy handler file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/handlers/main.yml
+       dest: /roles/prometheus/handlers/

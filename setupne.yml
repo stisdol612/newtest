@@ -1,0 +1,27 @@
+---
+- name: Set up Node exporter
+  hosts: localhost
+  become: yes
+
+  tasks:
+   - name: copy NE DefVar file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/defaults/main.yml
+       dest: /roles/node-exporter/defaults/
+
+   - name: copy NE-Main file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/tasks/main.yml
+       dest: /roles/node-exporter/tasks/
+
+   - name: copy service.j2 file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/templates/node_exporter.service.j2
+       dest: /roles/node-exporter/templates/
+
+   - name: copy handler file 
+     copy:
+       src: ~/newtest/newplaybooks/node-exporter/handlers/main.yml
+       dest: /roles/node-exporter/handlers      
+       
+                   
